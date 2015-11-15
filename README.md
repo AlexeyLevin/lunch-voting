@@ -15,8 +15,20 @@ Voting system for deciding where to have lunch (REST only).
   - JDBC URL: `jdbc:h2:file:~/voting`, User: `sa`, Password: `password`
   - Remote connection: URL: `jdbc:h2:tcp://localhost:9092/~/voting`, User: `sa`, Password: `password`
 
-- Common Properties:
+## Run
+
+## Test
   - <a href="http://localhost:8080/apiV1">Rest API base</a>
+
+### User handling
+
+
+    curl "http://localhost:8080/apiV1/users" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl "http://localhost:8080/apiV1/users/0" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl "http://localhost:8080/apiV1/users" -d "{\"name\" : \"NewUser\", \"email\" : \"new@mail.ru\",\"roles\" : [\"ROLE_USER\"]}" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" -H "Content-Type: application/json"
+    curl "http://localhost:8080/apiV1/users/search/by-email?email=admin@gmail.com" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+
+
 
 -----------
 ## H2
@@ -30,3 +42,14 @@ Voting system for deciding where to have lunch (REST only).
 -  <a href="http://spring.io/guides/tutorials/bookmarks/">Building REST services with Spring</a>
 -  <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">Common application properties</a>"
 -  <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">Multiple external configuration</a>"
+
+## REST
+http://curl.haxx.se/docs/manpage.html
+http://spring.io/guides/gs/accessing-data-rest/
+https://github.com/spring-guides/gs-accessing-data-rest
+
+org\springframework\web\servlet\DispatcherServlet.java
+   mappedHandler = getHandler(processedRequest)
+
+org.springframework.data.rest.core.mapping.ResourceMetadata
+		for (ResourceMetadata metadata : cache.values()) {

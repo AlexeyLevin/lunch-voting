@@ -1,19 +1,20 @@
 package ru.gkislin.voting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
 /**
  * User: gkislin
  */
-@NamedQueries({
-})
 @Entity
 @Table(name = "restorant", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "unique_restorant")})
 public class Restorant extends NamedEntity {
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "restorant")
-    protected Set<Lunch> lunches;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restorant")
+    private Set<Menu> menus;
 
     public Restorant() {
     }
@@ -25,7 +26,7 @@ public class Restorant extends NamedEntity {
     @Override
     public String toString() {
         return "Restorant (" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name=" + name +
                 ')';
     }

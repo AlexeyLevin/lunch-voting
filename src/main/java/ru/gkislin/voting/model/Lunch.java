@@ -1,48 +1,40 @@
 package ru.gkislin.voting.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 /**
  * User: gkislin
  */
-@NamedQueries({
-})
 @Entity
-@Table(name = "lunch")//, uniqueConstraints = {@UniqueConstraint(columnNames = "date, restorant_id, name", name = "unique_lunch")})
+@Table(name = "lunch", uniqueConstraints = {@UniqueConstraint(columnNames = {"menu_id", "name"}, name = "unique_lunch")})
 public class Lunch extends NamedEntity {
+
+    @Column(name = "price_cents", nullable = false)
+    private int price;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "menu_id", nullable = false)
+    @NotNull
+    private Menu menu;
 
     public Lunch() {
     }
 
-    public Lunch(Integer id, String name) {
+    public Lunch(Integer id, String name, int priceInCents) {
         super(id, name);
-
+        this.price = priceInCents;
     }
-
-    // price in cents
-    @Column(name = "price", nullable = false)
-    protected int price;
-
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Column(name = "menu_date", nullable = false)
-    protected LocalDate date;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restorant_id", nullable = false)
-    @NotNull
-    private Restorant restorant;
 
     @Override
     public String toString() {
         return "Lunch (" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
-                ", date=" + date +
+                ", price=" + price +
                 ')';
     }
 }

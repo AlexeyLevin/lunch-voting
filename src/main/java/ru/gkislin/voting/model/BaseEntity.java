@@ -1,8 +1,11 @@
 package ru.gkislin.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.MappedSuperclass;
 
 /**
  * User: gkislin
@@ -10,45 +13,17 @@ import javax.persistence.*;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseEntity {
-    @GeneratedValue
-    @Id
-    protected Integer id;
+public class BaseEntity extends AbstractPersistable<Integer> {
 
     public BaseEntity() {
     }
 
     protected BaseEntity(Integer id) {
-        this.id = id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
+        setId(id);
     }
 
     @JsonIgnore
     public boolean isNew() {
-        return (this.id == null);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        BaseEntity that = (BaseEntity) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return (id == null) ? 0 : id;
+        return super.isNew();
     }
 }

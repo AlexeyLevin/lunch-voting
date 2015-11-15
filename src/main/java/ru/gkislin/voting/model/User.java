@@ -21,25 +21,25 @@ public class User extends NamedEntity {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotEmpty
-    protected String email;
+    private String email;
 
     @Column(name = "password", nullable = false)
     @NotEmpty
     @Length(min = 5)
     @JsonIgnore
-    protected String password;
+    private String password;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    protected boolean enabled = true;
+    private boolean enabled = true;
 
     @Column(name = "registered", columnDefinition = "TIMESTAMP DEFAULT NOW()")
-    protected Date registered = new Date();
+    private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-    protected Set<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -103,7 +103,7 @@ public class User extends NamedEntity {
     @Override
     public String toString() {
         return "User (" +
-                "id=" + id +
+                "id=" + getId() +
                 ", email=" + email +
                 ", name=" + name +
                 ", enabled=" + enabled +
