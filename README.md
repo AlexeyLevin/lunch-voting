@@ -16,19 +16,44 @@ Voting system for deciding where to have lunch (REST only).
   - Remote connection: URL: `jdbc:h2:tcp://localhost:9092/~/voting`, User: `sa`, Password: `password`
 
 ## Run
+$ SPRING_PROFILES_ACTIVE=production
+$ mvn spring-boot:run
+
+$ mvn spring-boot:run -Dspring.profiles.active=production
+
+## Build JAR:
+$ mvn clean package
+$ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
+
 
 ## Test
-  - <a href="http://localhost:8080/apiV1">Rest API base</a>
+  - <a href="http://localhost:8080/api">The HAL Browser</a>
+
+    User login: user@yandex.ru
+      password: password
+      "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+
+
+    Admin login: admin@gmail.com
+       password: admin
+       "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
 
 ### User handling
 
+    403:Forbidden
+    curl "http://localhost:8080/api/users" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
 
-    curl "http://localhost:8080/apiV1/users" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
-    curl "http://localhost:8080/apiV1/users/0" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
-    curl "http://localhost:8080/apiV1/users" -d "{\"name\" : \"NewUser\", \"email\" : \"new@mail.ru\",\"roles\" : [\"ROLE_USER\"]}" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" -H "Content-Type: application/json"
-    curl "http://localhost:8080/apiV1/users/search/by-email?email=admin@gmail.com" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl "http://localhost:8080/api/users" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
+    curl "http://localhost:8080/api/users/0" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
+    curl "http://localhost:8080/api/users" -d "{\"name\" : \"NewUser\", \"email\" : \"new@mail.ru\",\"roles\" : [\"ROLE_USER\"]}" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" -H "Content-Type: application/json"
+    curl "http://localhost:8080/api/users/search/by-email?email=admin@gmail.com" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
 
+### Restorant handling (user auth "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=")
 
+    curl "http://localhost:8080/api/restorants" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl "http://localhost:8080/api/restorants/0" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl "http://localhost:8080/api/restorants" -d "{\"name\" : \"NewUser\", \"email\" : \"new@mail.ru\",\"roles\" : [\"ROLE_USER\"]}" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" -H "Content-Type: application/json"
+    curl "http://localhost:8080/api/restorants/search/by-email?email=admin@gmail.com" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
 
 -----------
 ## H2
@@ -40,16 +65,30 @@ Voting system for deciding where to have lunch (REST only).
 -  <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/">Spring Boot Reference Guide</a>
 -  <a href="https://github.com/spring-projects/spring-boot">spring-projects/spring-boot</a>
 -  <a href="http://spring.io/guides/tutorials/bookmarks/">Building REST services with Spring</a>
--  <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">Common application properties</a>"
--  <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">Multiple external configuration</a>"
+-  <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">Common application properties</a>
+-  <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">Multiple external configuration</a>
 
 ## REST
-http://curl.haxx.se/docs/manpage.html
-http://spring.io/guides/gs/accessing-data-rest/
-https://github.com/spring-guides/gs-accessing-data-rest
+- http://curl.haxx.se/docs/manpage.html
+- http://spring.io/guides/gs/accessing-data-rest/
+- https://github.com/spring-guides/gs-accessing-data-rest
 
 org\springframework\web\servlet\DispatcherServlet.java
    mappedHandler = getHandler(processedRequest)
 
 org.springframework.data.rest.core.mapping.ResourceMetadata
 		for (ResourceMetadata metadata : cache.values()) {
+- <a href="https://spring.io/blog/2014/07/14/spring-data-rest-now-comes-with-alps-metadata">Spring Data REST now comes with ALPS metadata</a>
+- HAL: https://tools.ietf.org/html/draft-kelly-json-hal-07
+
+## ETag
+- https://objectpartners.com/2015/06/02/etags-and-spring-data-rest/
+- http://stackoverflow.com/questions/31882180/why-is-the-version-property-not-set-with-spring-data-jpa
+
+
+## ID
+- https://github.com/spring-projects/spring-hateoas/issues/66
+- https://github.com/spring-projects/spring-hateoas/issues/67
+- https://github.com/gregturn/task-manager-app
+- http://stackoverflow.com/questions/24936636/while-using-spring-data-rest-after-migrating-an-app-to-spring-boot-i-have-obser
+- http://stackoverflow.com/questions/24839760/spring-boot-responsebody-doesnt-serialize-entity-id

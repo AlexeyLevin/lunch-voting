@@ -1,9 +1,8 @@
 package ru.gkislin.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * User: gkislin
@@ -11,10 +10,6 @@ import java.util.Set;
 @Entity
 @Table(name = "restorant", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "unique_restorant")})
 public class Restorant extends NamedEntity {
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restorant")
-    private Set<Menu> menus;
 
     public Restorant() {
     }
