@@ -26,8 +26,9 @@ $ mvn clean package
 $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 
 
-## Test
+## REST
   - <a href="http://localhost:8080/api">The HAL Browser</a>
+
 
     User login: user@yandex.ru
       password: password
@@ -43,26 +44,56 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
     403:Forbidden
     curl 'http://localhost:8080/api/users' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
 
+- <a href="http://localhost:8080/api/users">Users list</a>
+- <a href="http://localhost:8080/api/users/0">Users 0</a>
+- <a href="http://localhost:8080/api/users/search/by-email?email=admin@gmail.com">Users by email: email=admin@gmail.com</a>
+
+
     curl 'http://localhost:8080/api/users' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
     curl 'http://localhost:8080/api/users/0' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/users' -i -d'{"name\' : "NewUser", "email\' : "new@mail.ru","password\' : "123456","roles\' : ["ROLE_USER"]}' -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/users' -i -d'{"name" : "NewUser", "email" : "new@mail.ru","password" : "123456","roles" : ["ROLE_USER"]}' -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
     curl 'http://localhost:8080/api/users/search/by-email?email=admin@gmail.com' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
 ### Restorant handling
 
-    curl 'http://localhost:8080/api/restorants' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/restorants/0' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/restorants' -i -d'{"name\' : "Subway"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/restorants/search/by-email?email=admin@gmail.com' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+- <a href="http://localhost:8080/api/restaurants">Restaurant list</a>
+- <a href="http://localhost:8080/api/restaurants/0">Restaurant 0</a>
+- <a href="http://localhost:8080/api/restaurants/search/by-name?name=Don">Restaurant by name: name=Don</a>
+
+
+    curl 'http://localhost:8080/api/restaurants' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/restaurants/0' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/restaurants' -i -d'{"name" : "Subway"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/restaurants/search/by-name?name=Don' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
 ### Menu handling
 
-    curl 'http://localhost:8080/api/menus' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/menus/0' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/menus' -d'{"date" : "2015-11-17", "restorant":"http://localhost:8080/api/restorants/0"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/menus/1' -X PUT -d'{"date" : "2015-11-16"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+- <a href="http://localhost:8080/api/menus">Menu list</a>
+- <a href="http://localhost:8080/api/menus/0">Menu 0</a>
+- <a href="http://localhost:8080/api/menus/search/by-date?date=2015-11-19">Menu for date 2015-11-19</a>
+- <a href="http://localhost:8080/api/menus/search/by-restaurant?restaurant=http://localhost:8080/api/restaurants/0">Menu for restaurant 0</a>
+
+
+    curl 'http://localhost:8080/api/menus' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/menus/0' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/menus' -d'{"date" : "2015-11-17", "restaurant":"http://localhost:8080/api/restaurants/0"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/menus/1' -X PUT -d'{"date" : "2015-11-16"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/menus/search/by-date?date=2015-11-19' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/menus/search/by-restaurant?restaurant=http://localhost:8080/api/restaurants/0' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
 ### Lunch handling
+- <a href="http://localhost:8080/api/lunches">Lunch list</a>
+- <a href="http://localhost:8080/api/lunches/0">Lunch 0</a>
+- <a href="http://localhost:8080/api/lunches/search/by-date?date=2015-11-19">Lunch for date 2015-11-19</a>
+- <a href="http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1">Lunch for menu 1</a>
+
+
+    curl 'http://localhost:8080/api/lunches' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/lunches/11' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/lunches' -d'{"name" : "Desert", "price": 85, "menu":"http://localhost:8080/api/menus/0"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/lunches' -d'{"name" : "Desert", "menu":"http://localhost:8080/api/menus/5"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/lunches/search/by-date?date=2015-11-19' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
 -----------
 ## H2

@@ -2,48 +2,48 @@ package ru.gkislin.voting.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * User: gkislin
  */
 @Entity
-@Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"menu_date", "restorant_id"}, name = "unique_menu")})
+@Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"menu_date", "restaurant_id"}, name = "unique_menu")})
 public class Menu extends BaseEntity {
 
     @NotNull
     @Column(name = "menu_date", nullable = false)
-    private Date date;
+    //TODO switch to LocalDate
+    private String date;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "restorant_id", nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
-    private Restorant restorant;
+    private Restaurant restaurant;
 
     public Menu() {
     }
 
-    public Menu(Integer id, Restorant restorant, Date date) {
+    public Menu(Integer id, Restaurant restaurant, String date) {
         super(id);
-        this.restorant = restorant;
+        this.restaurant = restaurant;
         this.date = date;
     }
 
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Restorant getRestorant() {
-        return restorant;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestorant(Restorant restorant) {
-        this.restorant = restorant;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     @Override

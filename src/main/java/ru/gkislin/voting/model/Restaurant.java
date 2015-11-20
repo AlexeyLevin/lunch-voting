@@ -8,19 +8,19 @@ import javax.persistence.UniqueConstraint;
  * User: gkislin
  */
 @Entity
-@Table(name = "restorant", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "unique_restorant")})
-public class Restorant extends NamedEntity {
+@Table(name = "restaurant", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "unique_restaurant")})
+public class Restaurant extends NamedEntity {
 
-    public Restorant() {
+    public Restaurant() {
     }
 
-    public Restorant(Integer id, String name) {
+    public Restaurant(Integer id, String name) {
         super(id, name);
     }
 
     @Override
     public String toString() {
-        return "Restorant (" +
+        return "Restaurant (" +
                 "id=" + getId() +
                 ", name=" + name +
                 ')';

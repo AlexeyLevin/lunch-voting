@@ -10,12 +10,12 @@ import javax.validation.constraints.NotNull;
 @Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "menu_id"}, name = "unique_vote")})
 public class Vote extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "menu_id", nullable = false)
     @NotNull
     private Menu menu;
@@ -26,6 +26,22 @@ public class Vote extends BaseEntity {
     public Vote(Integer id, User user, Menu menu) {
         super(id);
         this.user = user;
+        this.menu = menu;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
         this.menu = menu;
     }
 
