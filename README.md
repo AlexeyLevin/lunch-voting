@@ -41,19 +41,19 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 ### User handling
 
     403:Forbidden
-    curl "http://localhost:8080/api/users" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl'http://localhost:8080/api/users' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
 
-    curl "http://localhost:8080/api/users" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
-    curl "http://localhost:8080/api/users/0" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
-    curl "http://localhost:8080/api/users" -d "{\"name\" : \"NewUser\", \"email\" : \"new@mail.ru\",\"roles\" : [\"ROLE_USER\"]}" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" -H "Content-Type: application/json"
-    curl "http://localhost:8080/api/users/search/by-email?email=admin@gmail.com" -H "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
+    curl 'http://localhost:8080/api/users' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/users/0' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/users' -d'{"name\' : "NewUser", "email\' : "new@mail.ru","password\' : "123456","roles\' : ["ROLE_USER"]}' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/users/search/by-email?email=admin@gmail.com' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
-### Restorant handling (user auth "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=")
+### Restorant handling (user auth'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=")
 
-    curl "http://localhost:8080/api/restorants" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
-    curl "http://localhost:8080/api/restorants/0" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
-    curl "http://localhost:8080/api/restorants" -d "{\"name\" : \"NewUser\", \"email\" : \"new@mail.ru\",\"roles\" : [\"ROLE_USER\"]}" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" -H "Content-Type: application/json"
-    curl "http://localhost:8080/api/restorants/search/by-email?email=admin@gmail.com" -H "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+    curl 'http://localhost:8080/api/restorants' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restorants/0' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restorants' -d'{"name\' : "Subway"}' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/restorants/search/by-email?email=admin@gmail.com' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
 
 -----------
 ## H2
@@ -92,3 +92,6 @@ org.springframework.data.rest.core.mapping.ResourceMetadata
 - https://github.com/gregturn/task-manager-app
 - http://stackoverflow.com/questions/24936636/while-using-spring-data-rest-after-migrating-an-app-to-spring-boot-i-have-obser
 - http://stackoverflow.com/questions/24839760/spring-boot-responsebody-doesnt-serialize-entity-id
+
+## JSON
+https://github.com/spring-projects/spring-hateoas/issues/333

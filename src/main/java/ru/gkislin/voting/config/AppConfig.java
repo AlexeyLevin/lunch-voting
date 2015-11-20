@@ -1,14 +1,9 @@
 package ru.gkislin.voting.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.sql.SQLException;
 
@@ -17,6 +12,26 @@ import java.sql.SQLException;
  */
 @Configuration
 public class AppConfig {
+
+/*
+    private static final String SPRING_HATEOAS_OBJECT_MAPPER = "_halObjectMapper";
+
+    @Autowired
+    @Qualifier(SPRING_HATEOAS_OBJECT_MAPPER)
+    private ObjectMapper springHateoasObjectMapper;
+
+    //   https://github.com/spring-projects/spring-hateoas/issues/333
+    @Bean(name = "objectMapper")
+    public ObjectMapper objectMapper() {
+        springHateoasObjectMapper.
+                setSerializationInclusion(JsonInclude.Include.NON_NULL).
+                setSerializationInclusion(JsonInclude.Include.NON_EMPTY).
+                setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE).
+                setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        return springHateoasObjectMapper;
+    }
+
+
     @Bean
     public ObjectMapper configeJackson(Jackson2ObjectMapperBuilder mapperBuilder) {
         return mapperBuilder.
@@ -26,6 +41,7 @@ public class AppConfig {
                 setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE).
                 setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
     }
+*/
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     @Profile("dev")

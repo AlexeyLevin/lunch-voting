@@ -1,9 +1,10 @@
 package ru.gkislin.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends NamedEntity {
+    private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -26,7 +28,6 @@ public class User extends NamedEntity {
     @Column(name = "password", nullable = false)
     @NotEmpty
     @Length(min = 5)
-    @JsonIgnore
     private String password;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
@@ -69,7 +70,7 @@ public class User extends NamedEntity {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = ENCODER.encode(password);
     }
 
     public Date getRegistered() {

@@ -6,25 +6,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import ru.gkislin.voting.model.User;
 
-import java.util.List;
-
 /**
  * Spring Data JPA repository for the User entity.
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
-
-    @Override
-    User save(User user);
-
-    @Override
-    void delete(User user);
-
-    @Override
-    User getOne(Integer id);
-
-    @Override
-    List<User> findAll();
-
 //  Spring Data REST doesn't support Optionals
 //  https://jira.spring.io/browse/DATAREST-511
     @RestResource(path = "by-email")
