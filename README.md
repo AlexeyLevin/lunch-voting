@@ -41,19 +41,28 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 ### User handling
 
     403:Forbidden
-    curl'http://localhost:8080/api/users' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/users' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
 
-    curl 'http://localhost:8080/api/users' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/users/0' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/users' -d'{"name\' : "NewUser", "email\' : "new@mail.ru","password\' : "123456","roles\' : ["ROLE_USER"]}' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/users/search/by-email?email=admin@gmail.com' -H 'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/users' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/users/0' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/users' -i -d'{"name\' : "NewUser", "email\' : "new@mail.ru","password\' : "123456","roles\' : ["ROLE_USER"]}' -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/users/search/by-email?email=admin@gmail.com' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
-### Restorant handling (user auth'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=")
+### Restorant handling
 
-    curl 'http://localhost:8080/api/restorants' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/restorants/0' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/restorants' -d'{"name\' : "Subway"}' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/restorants/search/by-email?email=admin@gmail.com' -H 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restorants' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restorants/0' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restorants' -i -d'{"name\' : "Subway"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/restorants/search/by-email?email=admin@gmail.com' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+
+### Menu handling
+
+    curl 'http://localhost:8080/api/menus' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/menus/0' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/menus' -d'{"date" : "2015-11-17", "restorant":"http://localhost:8080/api/restorants/0"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/menus/1' -X PUT -d'{"date" : "2015-11-16"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+
+### Lunch handling
 
 -----------
 ## H2

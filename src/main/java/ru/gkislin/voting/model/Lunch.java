@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "lunch", uniqueConstraints = {@UniqueConstraint(columnNames = {"menu_id", "name"}, name = "unique_lunch")})
 public class Lunch extends NamedEntity {
 
-    @Column(name = "price_cents", nullable = false)
+    @Column(name = "price", nullable = false)
     private int price;
 
     @JsonIgnore

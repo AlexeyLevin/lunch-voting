@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import ru.gkislin.voting.model.Menu;
 import ru.gkislin.voting.model.User;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Spring Data JPA repository for the Menu entity.
@@ -15,5 +15,5 @@ import java.time.LocalDate;
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @RestResource(path = "by-date")
     @Query("SELECT m FROM Menu m WHERE m.date=:date")
-    User findByDate(@Param("date") LocalDate date);
+    User findByDate(@Param("date") Date date);
 }

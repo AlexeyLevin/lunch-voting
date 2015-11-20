@@ -1,12 +1,8 @@
 package ru.gkislin.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.Date;
 
 /**
  * User: gkislin
@@ -16,32 +12,39 @@ import java.util.Set;
 public class Menu extends BaseEntity {
 
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "menu_date", nullable = false)
-    private LocalDate date;
+    private Date date;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "restorant_id", nullable = false)
     @NotNull
     private Restorant restorant;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "menu")
-    private Set<Lunch> lunches;
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
-    private Set<Vote> votes;
-
     public Menu() {
     }
 
-    public Menu(Integer id, Restorant restorant, LocalDate date) {
+    public Menu(Integer id, Restorant restorant, Date date) {
         super(id);
         this.restorant = restorant;
         this.date = date;
     }
 
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Restorant getRestorant() {
+        return restorant;
+    }
+
+    public void setRestorant(Restorant restorant) {
+        this.restorant = restorant;
+    }
 
     @Override
     public String toString() {

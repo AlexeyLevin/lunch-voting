@@ -69,15 +69,6 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
         </dependency>
-
-        <!--Time 8 API support-->
-<!--
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-java8</artifactId>
-            <version></version>
-        </dependency>
--->
     </dependencies>
 
     <build>
