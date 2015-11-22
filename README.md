@@ -5,10 +5,13 @@ Voting system for deciding where to have lunch (REST only).
 
 Implementation Stack:
 
-- <a href="https://github.com/spring-projects/spring-boot">spring-boot</a>
-- <a href="https://github.com/spring-projects/spring-hateoas">spring-hateoas</a>
-- <a href="https://github.com/spring-projects/spring-data-rest">spring-data-rest</a>
+For admin CRUD:
+- <a href="http://projects.spring.io/spring-boot/">Spring Boot</a>
+- <a href="http://projects.spring.io/spring-hateoas/">Spring HATEOAS</a>
+- <a href="http://projects.spring.io/spring-data-rest/">Spring Data REST</a>
 
+For Voting:
+- <a href="http://projects.spring.io/spring-data-jpa/">Spring Data JPA</a>
 
 ## Install:
 
@@ -118,65 +121,9 @@ Modification (Access allowed for Admin):
     curl 'http://localhost:8080/api/lunches/search/by-date?date=2015-11-19' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
     curl 'http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
-### Voting
+## Voting
 - <a href="http://localhost:8080/api/vote">Current Vote</a>
 
 - Vote for menu 0: `curl 'http://localhost:8080/api/vote/0' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'`
 - Vote for menu 2: `curl 'http://localhost:8080/api/vote/2' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'`
 - Check current vote: `curl 'http://localhost:8080/api/vote' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='`
-
------------
-## H2
--  <a href="http://stackoverflow.com/questions/24803279/grails-accessing-h2-tcp-server-hangs#33718748">H2 TCP connection</a>
-
-## Spring Boot
--  http://habrahabr.ru/post/257223/
--  <a href="http://blog.jetbrains.com/idea/2015/04/webinar-recording-spring-boot-and-intellij-idea-14-1">Spring Boot and Intellij IDEA 14</a>
--  https://github.com/snicoll-demos/spring-boot-intellij-idea-webinar
--  <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/">Spring Boot Reference Guide</a>
--  <a href="https://github.com/spring-projects/spring-boot">spring-projects/spring-boot</a>
--  <a href="http://spring.io/guides/tutorials/bookmarks/">Building REST services with Spring</a>
--  <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">Common application properties</a>
--  <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">Multiple external configuration</a>
-http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html
-
-## REST
-- http://curl.haxx.se/docs/manpage.html
-- http://spring.io/guides/gs/accessing-data-rest/
-- https://github.com/spring-guides/gs-accessing-data-rest
-
-org\springframework\web\servlet\DispatcherServlet.java
-   mappedHandler = getHandler(processedRequest)
-
-org.springframework.data.rest.core.mapping.ResourceMetadata
-		for (ResourceMetadata metadata : cache.values()) {
-- <a href="https://spring.io/blog/2014/07/14/spring-data-rest-now-comes-with-alps-metadata">Spring Data REST now comes with ALPS metadata</a>
-- HAL: https://tools.ietf.org/html/draft-kelly-json-hal-07
-
-## ETag
-- https://objectpartners.com/2015/06/02/etags-and-spring-data-rest/
-- http://stackoverflow.com/questions/31882180/why-is-the-version-property-not-set-with-spring-data-jpa
-
-
-## ID
-- https://github.com/spring-projects/spring-hateoas/issues/66
-- https://github.com/spring-projects/spring-hateoas/issues/67
-- https://github.com/gregturn/task-manager-app
-- http://stackoverflow.com/questions/24936636/while-using-spring-data-rest-after-migrating-an-app-to-spring-boot-i-have-obser
-- http://stackoverflow.com/questions/24839760/spring-boot-responsebody-doesnt-serialize-entity-id
-
-## JSON
-https://github.com/spring-projects/spring-hateoas/issues/333
-
-## Projects
-https://github.com/spring-projects/spring-data-rest
-https://github.com/spring-projects/spring-hateoas
-https://en.wikipedia.org/wiki/HATEOAS
-http://translate.academic.ru/hypermedia/en/ru/
-http://stackoverflow.com/questions/19514131/spring-hateoas-versus-spring-data-rest/19516776
-https://ru.wikipedia.org/wiki/Список_кодов_состояния_HTTP
-https://github.com/spring-projects/spring-data-examples/tree/master/rest/
-
-## Bugs
-http://stackoverflow.com/questions/17277078/spring-mvc-exception-when-using-responsebody-and-entity-with-circular-referenc
-http://stackoverflow.com/questions/8966030/hibernate-jpa-import-sql-utf8-characters-corrupted
