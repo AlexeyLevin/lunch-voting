@@ -20,13 +20,13 @@ For Voting:
 ## Run (from project directory)
 
 ### Dev environment
-`$ mvn spring-boot:run`
+
+    $ mvn spring-boot:run
 
 or
 
-`$ mvn clean package`
-
-`$ java -Dfile.encoding=UTF8 -Dspring.profiles.active="dev" -jar target/lunch-voting.jar`
+    $ mvn clean package
+    $ java -Dfile.encoding=UTF8 -Dspring.profiles.active="dev" -jar target/lunch-voting.jar
 
 - <a href="http://localhost:8082/">H2 console</a>
 - User: `sa`, no password
@@ -34,13 +34,13 @@ or
 - Remote connection URL: `tcp://localhost:9092/mem:voting`
 
 ### Prod environment
-`$ mvn -P prod spring-boot:run`
+
+    $ mvn -P prod spring-boot:run`
 
 or
 
-`$ mvn clean package`
-
-`$ java -Dfile.encoding=UTF8 -jar target/lunch-voting.jar`
+    $ mvn clean package`
+    $ java -Dfile.encoding=UTF8 -jar target/lunch-voting.jar
 
 - User: `sa`, password: `zD5z6Wx`
 - JDBC URL: `jdbc:h2:file:~/voting`
