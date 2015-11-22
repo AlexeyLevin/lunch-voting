@@ -72,10 +72,10 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 - <a href="http://localhost:8080/api/menus/search/by-restaurant?restaurant=http://localhost:8080/api/restaurants/0">Menu for restaurant 0</a>
 
 
-    curl 'http://localhost:8080/api/menus' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/menus/0' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/menus' -d'{"date" : "2015-11-17", "restaurant":"http://localhost:8080/api/restaurants/0"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/menus/1' -X PUT -d'{"date" : "2015-11-16"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/menus' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/menus/0' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/menus' -i -d'{"date" : "2015-11-17", "restaurant":"http://localhost:8080/api/restaurants/0"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/menus/1' -i -X PUT -d'{"date" : "2015-11-16"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
     curl 'http://localhost:8080/api/menus/search/by-date?date=2015-11-19' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
     curl 'http://localhost:8080/api/menus/search/by-restaurant?restaurant=http://localhost:8080/api/restaurants/0' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
@@ -86,12 +86,21 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 - <a href="http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1">Lunch for menu 1</a>
 
 
-    curl 'http://localhost:8080/api/lunches' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/lunches/11' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/lunches' -d'{"name" : "Desert", "price": 85, "menu":"http://localhost:8080/api/menus/0"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/lunches' -d'{"name" : "Desert", "menu":"http://localhost:8080/api/menus/5"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/lunches' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/lunches/11' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/lunches' -i -d'{"name" : "Desert", "price": 85, "menu":"http://localhost:8080/api/menus/0"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/lunches' -i -d'{"name" : "Desert", "menu":"http://localhost:8080/api/menus/5"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
     curl 'http://localhost:8080/api/lunches/search/by-date?date=2015-11-19' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
     curl 'http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+
+### Voting
+- <a href="http://localhost:8080/api/vote">Show voted restaurants</a>
+
+
+    curl 'http://localhost:8080/api/vote' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/vote/0' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/vote/2' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+    curl 'http://localhost:8080/api/vote' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
 
 -----------
 ## H2
@@ -105,6 +114,7 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 -  <a href="http://spring.io/guides/tutorials/bookmarks/">Building REST services with Spring</a>
 -  <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html">Common application properties</a>
 -  <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">Multiple external configuration</a>
+http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html
 
 ## REST
 - http://curl.haxx.se/docs/manpage.html

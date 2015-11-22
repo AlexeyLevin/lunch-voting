@@ -9,6 +9,7 @@ import ru.gkislin.voting.repository.UserRepository;
 import ru.gkislin.voting.repository.VoteRepository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class VoteService {
@@ -18,15 +19,19 @@ public class VoteService {
     @Autowired
     private UserRepository userRepository;
 
+    public Optional<Vote> show(int userId, LocalDate date) {
+        return voteRepository.getForUserAndDate(userId, date);
+    }
+
     @Transactional
     public VoteWithStatus save(int userId, final Menu menu) {
         LocalDate date = menu.getDate();
-        VoteWithStatus voteWithStatus = voteRepository.getForUserAndDate(userId, date).
-                map(v -> {
+        VoteWithStatus voteWithStatus = voteRepository.getForUserAndDate(userId, date)
+                .map(v -> {
                     v.setMenu(menu);
                     return new VoteWithStatus(v, false);
-                }).
-                orElseGet(() -> new VoteWithStatus(
+                })
+                .orElseGet(() -> new VoteWithStatus(
                         new Vote(userRepository.getOne(userId), menu, date), true));
 
         voteRepository.save(voteWithStatus.getVote());
@@ -36,9 +41,9 @@ public class VoteService {
     @Transactional
     public VoteWithStatus saveIfAbsent(int userId, final Menu menu) {
         LocalDate date = menu.getDate();
-        return voteRepository.getForUserAndDate(userId, date).
-                map(v -> new VoteWithStatus(v, false)).
-                orElseGet(() -> new VoteWithStatus(voteRepository.save(new Vote(userRepository.getOne(userId), menu, date)), true));
+        return voteRepository.getForUserAndDate(userId, date)
+                .map(v -> new VoteWithStatus(v, false))
+                .orElseGet(() -> new VoteWithStatus(voteRepository.save(new Vote(userRepository.getOne(userId), menu, date)), true));
     }
 
     public static class VoteWithStatus {

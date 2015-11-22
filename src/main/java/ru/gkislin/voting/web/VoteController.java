@@ -1,10 +1,7 @@
 package ru.gkislin.voting.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.DomainClassConverter;
-import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gkislin.voting.LoggedUser;
 import ru.gkislin.voting.model.Menu;
-import ru.gkislin.voting.model.Vote;
+import ru.gkislin.voting.model.Restaurant;
 import ru.gkislin.voting.service.VoteService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -27,17 +25,19 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  */
 
 @RestController
-@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/vote", produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
-    private final Logger log = LoggerFactory.getLogger(VoteService.class);
-
     private static final LocalTime EXPIRED_TIME = LocalTime.parse("11:00");
 
     @Autowired
     private VoteService voteService;
 
-    @Autowired
-    private EntityLinks entityLinks;
+    @RequestMapping(method = GET)
+    ResponseEntity<Resource<Restaurant>> showCurrent() {
+        return voteService.show(LoggedUser.id(), LocalDate.now())
+                .map(vote -> new ResponseEntity<>(new Resource<>(vote.getMenu().getRestaurant()), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     /**
      * Accepts a user vote for an {@link Menu}
@@ -47,8 +47,8 @@ public class VoteController {
      * @return {@link Menu} user voted and code 200 Updated, 201 Created or 409 Conflict
      */
 
-    @RequestMapping(value = "/vote/{id}", method = POST)
-    ResponseEntity<Resource<Vote>> vote(@PathVariable("id") Menu menu) {
+    @RequestMapping(value = "/{id}", method = POST)
+    ResponseEntity<Resource<Restaurant>> vote(@PathVariable("id") Menu menu) {
         LocalDate today = LocalDate.now();
         if (menu == null || !menu.getDate().equals(today)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,7 +58,7 @@ public class VoteController {
         VoteService.VoteWithStatus voteWithStatus = expired ?
                 voteService.saveIfAbsent(userId, menu) :
                 voteService.save(userId, menu);
-        Resource<Vote> resource = new Resource<>(voteWithStatus.getVote());
+        Resource<Restaurant> resource = new Resource<>(voteWithStatus.getVote().getMenu().getRestaurant());
         return new ResponseEntity<>(resource,
                 voteWithStatus.isCreated() ? HttpStatus.CREATED : (expired ? HttpStatus.CONFLICT : HttpStatus.OK));
     }
