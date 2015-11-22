@@ -2,6 +2,7 @@ package ru.gkislin.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -14,7 +15,7 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseEntity extends AbstractPersistable<Integer> {
+public class BaseEntity extends AbstractPersistable<Integer> implements Identifiable<Integer> {
 
     public BaseEntity() {
     }

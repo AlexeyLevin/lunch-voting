@@ -2,6 +2,7 @@ package ru.gkislin.voting.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * User: gkislin
@@ -12,8 +13,7 @@ public class Menu extends BaseEntity {
 
     @NotNull
     @Column(name = "menu_date", nullable = false)
-    //TODO switch to LocalDate
-    private String date;
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -23,18 +23,18 @@ public class Menu extends BaseEntity {
     public Menu() {
     }
 
-    public Menu(Integer id, Restaurant restaurant, String date) {
+    public Menu(Integer id, Restaurant restaurant, LocalDate date) {
         super(id);
         this.restaurant = restaurant;
         this.date = date;
     }
 
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

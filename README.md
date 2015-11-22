@@ -26,9 +26,7 @@ $ mvn clean package
 $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 
 
-## REST
-  - <a href="http://localhost:8080/api">The HAL Browser</a>
-
+## <a href="http://localhost:8080/api">The HAL Browser</a>
 
     User login: user@yandex.ru
       password: password
@@ -135,3 +133,11 @@ org.springframework.data.rest.core.mapping.ResourceMetadata
 
 ## JSON
 https://github.com/spring-projects/spring-hateoas/issues/333
+
+## Projects
+https://github.com/spring-projects/spring-data-rest
+https://github.com/spring-projects/spring-hateoas
+https://en.wikipedia.org/wiki/HATEOAS
+http://translate.academic.ru/hypermedia/en/ru/
+http://stackoverflow.com/questions/19514131/spring-hateoas-versus-spring-data-rest/19516776
+https://ru.wikipedia.org/wiki/Список_кодов_состояния_HTTP

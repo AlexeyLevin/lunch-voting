@@ -2,12 +2,13 @@ package ru.gkislin.voting.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * User: gkislin
  */
 @Entity
-@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "menu_id"}, name = "unique_vote")})
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "vote_date"}, name = "unique_vote")})
 public class Vote extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -20,13 +21,17 @@ public class Vote extends BaseEntity {
     @NotNull
     private Menu menu;
 
+    @NotNull
+    @Column(name = "vote_date", nullable = false)
+    private LocalDate date;
+
     public Vote() {
     }
 
-    public Vote(Integer id, User user, Menu menu) {
-        super(id);
+    public Vote(User user, Menu menu, LocalDate date) {
         this.user = user;
         this.menu = menu;
+        this.date = date;
     }
 
     public User getUser() {
@@ -43,6 +48,14 @@ public class Vote extends BaseEntity {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
