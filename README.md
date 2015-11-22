@@ -3,39 +3,56 @@ Voting system for deciding where to have lunch (REST only).
 
 ### <a href="https://gist.github.com/juozapas/f20b55e4568d7f5c63b1">Тестовое задание</a>
 
+Implementation Stack:
+
+- <a href="https://github.com/spring-projects/spring-boot">spring-boot</a>
+- <a href="https://github.com/spring-projects/spring-hateoas">spring-hateoas</a>
+- <a href="https://github.com/spring-projects/spring-data-rest">spring-data-rest</a>
+
+
 ## Install:
 
     git clone https://github.com/gkislin/lunch-voting
 
-- DEV Properties (`/src/main/resources/application-dev.properties`)
-  - <a href="http://localhost:8082/">H2 console</a> (JDBC URL: `jdbc:h2:mem:voting`, User: `sa`)
-  - Remote connection: URL: `tcp://localhost:9092/mem:voting`, User: `sa`
+## Run (from project directory)
 
-- Defult Properties: (`/src/main/resources/application.properties`)
-  - JDBC URL: `jdbc:h2:file:~/voting`, User: `sa`, Password: `password`
-  - Remote connection: URL: `jdbc:h2:tcp://localhost:9092/~/voting`, User: `sa`, Password: `password`
+### Dev environment
+`$ mvn spring-boot:run`
 
-## Run
-$ SPRING_PROFILES_ACTIVE=production
-$ mvn spring-boot:run
+or
 
-$ mvn spring-boot:run -Dspring.profiles.active=production
+`$ mvn clean package`
 
-## Build JAR:
-$ mvn clean package
-$ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
+`$ java -Dfile.encoding=UTF8 -Dspring.profiles.active="dev" -jar target/lunch-voting.jar`
 
+- <a href="http://localhost:8082/">H2 console</a>
+- User: `sa`, no password
+- JDBC URL: `jdbc:h2:mem:voting`
+- Remote connection URL: `tcp://localhost:9092/mem:voting`
+
+### Prod environment
+`$ mvn -P prod spring-boot:run`
+
+or
+
+`$ mvn clean package`
+
+`$ java -Dfile.encoding=UTF8 -jar target/lunch-voting.jar`
+
+- User: `sa`, password: `zD5z6Wx`
+- JDBC URL: `jdbc:h2:file:~/voting`
+- Remote connection URL: `jdbc:h2:tcp://localhost:9092/~/voting`
 
 ## <a href="http://localhost:8080/api">The HAL Browser</a>
 
-    User login: user@yandex.ru
-      password: password
-      "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
+        User login: user@yandex.ru
+          password: password
+    "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
 
 
-    Admin login: admin@gmail.com
-       password: admin
-       "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
+       Admin login: admin@gmail.com
+          password: admin
+    "Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
 
 ### User handling
 
@@ -49,8 +66,8 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 
     curl 'http://localhost:8080/api/users' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
     curl 'http://localhost:8080/api/users/0' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/users' -i -d'{"name" : "NewUser", "email" : "new@mail.ru","password" : "123456","roles" : ["ROLE_USER"]}' -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
     curl 'http://localhost:8080/api/users/search/by-email?email=admin@gmail.com' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/users' -i -d'{"name" : "NewUser", "email" : "new@mail.ru","password" : "123456","roles" : ["ROLE_USER"]}' -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
 
 ### Restorant handling
 
@@ -59,10 +76,18 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 - <a href="http://localhost:8080/api/restaurants/search/by-name?name=Don">Restaurant by name: name=Don</a>
 
 
-    curl 'http://localhost:8080/api/restaurants' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    curl 'http://localhost:8080/api/restaurants/0' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/restaurants' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restaurants/0' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+    curl 'http://localhost:8080/api/restaurants/search/by-name?name=Don' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+
+Modification (Access denied for User):
+
+    curl 'http://localhost:8080/api/restaurants' -i -d'{"name" : "Subway"}' -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
+
+Modification (Access allowed for Admin):
+
     curl 'http://localhost:8080/api/restaurants' -i -d'{"name" : "Subway"}' -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/restaurants/search/by-name?name=Don' -i -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    curl 'http://localhost:8080/api/restaurants/3' -i -X DELETE -H'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' -H'Content-Type: application/json'
 
 ### Menu handling
 
@@ -81,7 +106,7 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
 
 ### Lunch handling
 - <a href="http://localhost:8080/api/lunches">Lunch list</a>
-- <a href="http://localhost:8080/api/lunches/0">Lunch 0</a>
+- <a href="http://localhost:8080/api/lunches/1">Lunch 1</a>
 - <a href="http://localhost:8080/api/lunches/search/by-date?date=2015-11-19">Lunch for date 2015-11-19</a>
 - <a href="http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1">Lunch for menu 1</a>
 
@@ -94,19 +119,18 @@ $ java -jar target/spring-and-angular-0.0.1-SNAPSHOT.jar
     curl 'http://localhost:8080/api/lunches/search/by-menu?menu=http://localhost:8080/api/menus/1' -i -H'Authorization:Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
 ### Voting
-- <a href="http://localhost:8080/api/vote">Show voted restaurants</a>
+- <a href="http://localhost:8080/api/vote">Current Vote</a>
 
-
-    curl 'http://localhost:8080/api/vote' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
-    curl 'http://localhost:8080/api/vote/0' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/vote/2' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'
-    curl 'http://localhost:8080/api/vote' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+- Vote for menu 0: `curl 'http://localhost:8080/api/vote/0' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'`
+- Vote for menu 2: `curl 'http://localhost:8080/api/vote/2' -i -X POST -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=' -H'Content-Type: application/json'`
+- Check current vote: `curl 'http://localhost:8080/api/vote' -i -H'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='`
 
 -----------
 ## H2
 -  <a href="http://stackoverflow.com/questions/24803279/grails-accessing-h2-tcp-server-hangs#33718748">H2 TCP connection</a>
 
 ## Spring Boot
+-  http://habrahabr.ru/post/257223/
 -  <a href="http://blog.jetbrains.com/idea/2015/04/webinar-recording-spring-boot-and-intellij-idea-14-1">Spring Boot and Intellij IDEA 14</a>
 -  https://github.com/snicoll-demos/spring-boot-intellij-idea-webinar
 -  <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/">Spring Boot Reference Guide</a>
@@ -151,3 +175,8 @@ https://en.wikipedia.org/wiki/HATEOAS
 http://translate.academic.ru/hypermedia/en/ru/
 http://stackoverflow.com/questions/19514131/spring-hateoas-versus-spring-data-rest/19516776
 https://ru.wikipedia.org/wiki/Список_кодов_состояния_HTTP
+https://github.com/spring-projects/spring-data-examples/tree/master/rest/
+
+## Bugs
+http://stackoverflow.com/questions/17277078/spring-mvc-exception-when-using-responsebody-and-entity-with-circular-referenc
+http://stackoverflow.com/questions/8966030/hibernate-jpa-import-sql-utf8-characters-corrupted

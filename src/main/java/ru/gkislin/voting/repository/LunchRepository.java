@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gkislin.voting.model.Lunch;
 import ru.gkislin.voting.model.Menu;
@@ -24,4 +25,12 @@ public interface LunchRepository extends JpaRepository<Lunch, Integer> {
     @RestResource(path = "by-menu")
     @Query("SELECT l FROM Lunch l WHERE l.menu=:menu")
     List<Menu> findByMenu(@Param("menu") Menu menu);
+
+    @Override
+    @Secured("ROLE_ADMIN")
+    Lunch save(Lunch entity);
+
+    @Override
+    @Secured("ROLE_ADMIN")
+    void delete(Integer id);
 }

@@ -19,7 +19,7 @@ public class VoteService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<Vote> show(int userId, LocalDate date) {
+    public Optional<Vote> getForUserAndDate(int userId, LocalDate date) {
         return voteRepository.getForUserAndDate(userId, date);
     }
 

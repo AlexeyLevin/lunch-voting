@@ -2,7 +2,6 @@ package ru.gkislin.voting.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.DomainClassConverter;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +32,9 @@ public class VoteController {
     private VoteService voteService;
 
     @RequestMapping(method = GET)
-    ResponseEntity<Resource<Restaurant>> showCurrent() {
-        return voteService.show(LoggedUser.id(), LocalDate.now())
-                .map(vote -> new ResponseEntity<>(new Resource<>(vote.getMenu().getRestaurant()), HttpStatus.OK))
+    public ResponseEntity<Restaurant> current() {
+        return voteService.getForUserAndDate(LoggedUser.id(), LocalDate.now())
+                .map(vote -> new ResponseEntity<>(vote.getMenu().getRestaurant(), HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -48,7 +47,7 @@ public class VoteController {
      */
 
     @RequestMapping(value = "/{id}", method = POST)
-    ResponseEntity<Resource<Restaurant>> vote(@PathVariable("id") Menu menu) {
+    public ResponseEntity<Restaurant> vote(@PathVariable("id") Menu menu) {
         LocalDate today = LocalDate.now();
         if (menu == null || !menu.getDate().equals(today)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,8 +57,7 @@ public class VoteController {
         VoteService.VoteWithStatus voteWithStatus = expired ?
                 voteService.saveIfAbsent(userId, menu) :
                 voteService.save(userId, menu);
-        Resource<Restaurant> resource = new Resource<>(voteWithStatus.getVote().getMenu().getRestaurant());
-        return new ResponseEntity<>(resource,
+        return new ResponseEntity<>(voteWithStatus.getVote().getMenu().getRestaurant(),
                 voteWithStatus.isCreated() ? HttpStatus.CREATED : (expired ? HttpStatus.CONFLICT : HttpStatus.OK));
     }
 }
