@@ -16,13 +16,14 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the Menu entity.
  */
-@Transactional(readOnly = true)
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
     @RestResource(path = "by-date")
+    @Transactional(readOnly = true)
     @Query("SELECT m FROM Menu m WHERE m.date=:date")
     List<Menu> findByDate(@Param("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 
     @RestResource(path = "by-restaurant")
+    @Transactional(readOnly = true)
     @Query("SELECT m FROM Menu m WHERE m.restaurant=:restaurant")
     List<Menu> findByRestaurant(@Param("restaurant") Restaurant restaurant);
 

@@ -10,11 +10,11 @@ import ru.gkislin.voting.model.User;
 /**
  * Spring Data JPA repository for the User entity.
  */
-@Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 //  Spring Data REST doesn't support Optionals
 //  https://jira.spring.io/browse/DATAREST-511
     @RestResource(path = "by-email")
+    @Transactional(readOnly = true)
     @Query("SELECT u FROM User u " +
             " LEFT JOIN u.roles WHERE u.email=:email")
     User findByEmail(@Param("email") String email);

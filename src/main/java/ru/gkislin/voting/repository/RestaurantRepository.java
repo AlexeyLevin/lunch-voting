@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the Restaurant entity.
  */
-@Transactional(readOnly = true)
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     @RestResource(path = "by-name")
+    @Transactional(readOnly = true)
     @Query("SELECT r FROM Restaurant r WHERE r.name LIKE CONCAT('%',:name,'%')")
     List<Restaurant> findByName(@Param("name") String name);
 
