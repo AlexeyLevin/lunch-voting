@@ -64,7 +64,7 @@ or
 
 - <a href="http://localhost:8080/api/users">Users list</a>
 - <a href="http://localhost:8080/api/users/0">Users 0</a>
-- <a href="http://localhost:8080/api/users/search/by-email?email=admin@gmail.com">Users by email: email=admin@gmail.com</a>
+- <a href="http://localhost:8080/api/users/search/by-email?email=admin@gmail.com">Users by email: admin@gmail.com</a>
 
 CURL:
 
