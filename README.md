@@ -31,7 +31,7 @@ or
 - <a href="http://localhost:8082/">H2 console</a>
 - User: `sa`, no password
 - JDBC URL: `jdbc:h2:mem:voting`
-- Remote connection URL: `tcp://localhost:9092/mem:voting`
+- Remote connection URL: `jdbc:h2:tcp://localhost:9092/mem:voting`
 
 ### Prod environment
 
